@@ -1,18 +1,40 @@
+
 var sget = require('sget');
 
-function errorMessage(){
-	console.log('\n- - - ERROR - - -\nA valid password contains at least\none capital letter or exclaimation point\nand needs to be at least 10 characters long.');
-};
 
 var desiredPassword = sget('\nPlease create a password: ');
 var hasCaps = false;
 var hasBang = false;
 
-var doesItHaveCaps = function( desiredPassword ){
-	var i = 0;
-	var character = desiredPassword.charAt(i);
+console.log(typeof desiredPassword);
 
-	for ( var i = 0; i < desiredPassword.length; i++ ){
+var createPassword = function( input ){
+	console.log(input);
+	if ( input.length  > 9 ){
+	
+		doesItHaveCaps( desiredPassword );
+
+		// if(hasBang || hasCaps){
+		// 	console.log('Thanks! Check your inbox for a confirmation email from Cat Fancy Magazine.\nThat\'s all for meow!');
+		// } else {
+		// 	errorMessage();
+		// 	createPassword();
+		// }
+
+	} else {
+		errorMessage();
+		createPassword();
+	}
+};
+
+var doesItHaveCaps = function( input ){
+	
+	console.log("TACO TIME");
+
+	var i = 0;
+	var character = input.charAt(i);
+
+	for ( var i = 0; i < input.length; i++ ){
 		if(character === "!"){
 			hasBang = true;
 		} else if (character === character.toUpperCase()){
@@ -21,23 +43,8 @@ var doesItHaveCaps = function( desiredPassword ){
 	}
 };
 
-var createPassword = function( desiredPassword ){
-
-	if ( desiredPassword.length >= 10 ){
-
-		doesItHaveCaps( desiredPassword );
-
-		if(hasBang || hasCaps){
-			console.log('Thanks! Check your inbox for a confirmation email from Cat Fancy Magazine.\nThat\'s all for meow!');
-		} else {
-			errorMessage();
-			createPassword();
-		}
-
-	} else {
-		errorMessage();
-		createPassword();
-	}
+function errorMessage(){
+	console.log('\n- - - ERROR - - -\nA valid password contains at least\none capital letter or exclaimation point\nand needs to be at least 10 characters long.');
 };
 
 createPassword(desiredPassword);
