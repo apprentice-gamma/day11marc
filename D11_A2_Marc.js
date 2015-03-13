@@ -13,7 +13,6 @@ var getInput = function(){
 }
 
 var checkForLength = function( input ){
-
 	if ( passwordLength > 9 ){
 		doesItHaveCaps(desiredPassword);
 	} else {
@@ -23,7 +22,6 @@ var checkForLength = function( input ){
 };
 
 var doesItHaveCaps = function( input ){
-	
 	for ( var i = 0; i < passwordLength; i++ ){
 		var character = input.charAt(i);
 
