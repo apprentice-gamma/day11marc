@@ -1,52 +1,51 @@
 
+
 var sget = require('sget');
-
-
-var desiredPassword = sget('\nPlease create a password: ');
+var desiredPassword;
+var passwordLength;
 var hasCaps = false;
-var hasBang = false;
+var userInput;
 
-console.log(typeof desiredPassword);
+var getInput = function(){
+	desiredPassword = userInput.trim();
+	passwordLength = desiredPassword.length;
+	checkForLength(desiredPassword);
+}
 
-var createPassword = function( input ){
-	console.log(input);
-	if ( input.length  > 9 ){
-	
-		doesItHaveCaps( desiredPassword );
+var checkForLength = function( input ){
 
-		// if(hasBang || hasCaps){
-		// 	console.log('Thanks! Check your inbox for a confirmation email from Cat Fancy Magazine.\nThat\'s all for meow!');
-		// } else {
-		// 	errorMessage();
-		// 	createPassword();
-		// }
-
+	if ( passwordLength > 9 ){
+		doesItHaveCaps(desiredPassword);
 	} else {
 		errorMessage();
-		createPassword();
+		getInput(userInput = sget('\nPlease create a password: '));
 	}
 };
 
 var doesItHaveCaps = function( input ){
 	
-	console.log("TACO TIME");
+	for ( var i = 0; i < passwordLength; i++ ){
+		var character = input.charAt(i);
 
-	var i = 0;
-	var character = input.charAt(i);
-
-	for ( var i = 0; i < input.length; i++ ){
-		if(character === "!"){
-			hasBang = true;
-		} else if (character === character.toUpperCase()){
+		if( character === "!" || character === character.toUpperCase() ) {
 			hasCaps = true;
-		}
+		} 			
 	}
+	confirmPassword();
 };
+
+var confirmPassword = function(){
+	if(hasCaps==true){
+	 	console.log('\nThanks! Check your inbox for a confirmation email from Cat Fancy Magazine.\nThat\'s all for meow!');
+	} else {
+		errorMessage();
+		checkForLength();
+	}	
+}
 
 function errorMessage(){
 	console.log('\n- - - ERROR - - -\nA valid password contains at least\none capital letter or exclaimation point\nand needs to be at least 10 characters long.');
 };
 
-createPassword(desiredPassword);
-// a user to create a password. 
-//If the password is at least 10 characters long AND contains at least (1) capital letter OR an exclamation point, display a confirmation message; otherwise, display an error.
+getInput(userInput = sget('\nPlease create a password: '));
+
